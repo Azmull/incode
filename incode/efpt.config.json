@@ -1,0 +1,165 @@
+﻿{
+   "CodeGenerationMode": 5,
+   "ContextClassName": "incodedatabaseContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1248",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "incode",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[admin]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cinema_reviews]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cinemas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[entrust_mission]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[entrust_mission_progress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[follows]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[images]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[mission]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[mission_progress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[movie_reviews]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[movies]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_detail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[point_log]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[point_purchase_log]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[point_type_definition]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[post_reply_likes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[posts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[posts_likes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[posts_replies]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[product]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[review_helpful_votes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[save_posts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[shipped_detail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[user]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[user_login]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[user_movie_list]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[user_status]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[wallet_transactions]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}
