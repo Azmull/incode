@@ -26,6 +26,7 @@
             <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>
                 <input asp-for="ImageName" class="form-control" />
+                <img src="~/img/pointshop/@Html.DisplayFor(model => model.ImageName)" />
                 <span asp-validation-for="ImageName" class="text-danger"></span>
             </div>
             <div class="form-group">
