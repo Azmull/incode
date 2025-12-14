@@ -20,7 +20,6 @@ namespace incode.ViewModels
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
-        public virtual User User { get; set; }
         public int OrderDetailId { get; set; }
 
         public int ProductId { get; set; }
@@ -31,9 +30,8 @@ namespace incode.ViewModels
 
         public bool IsShipped { get; set; }
 
-        public virtual Order Order { get; set; }
-
-        public virtual Product Product { get; set; }
         public virtual ICollection<ShippedDetail> ShippedDetails { get; set; } = new List<ShippedDetail>();
     }
+
+
 }

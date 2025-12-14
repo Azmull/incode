@@ -1,7 +1,7 @@
 ﻿@model incode.Models.Product
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "商品管理";
 }
 
 <h1>Delete</h1>
@@ -28,6 +28,9 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ImageName)
+        </dd>
+        <dd>
+            <img src="~/img/pointshop/@Html.DisplayFor(model => model.ImageName)" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Type)
