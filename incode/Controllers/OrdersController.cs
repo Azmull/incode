@@ -1,11 +1,13 @@
-﻿using System;
+﻿using incode.Models;
+using incode.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using incode.Models;
 
 namespace incode.Controllers
 {
@@ -24,7 +26,7 @@ namespace incode.Controllers
             var incodedatabaseContext = _context.Orders.Include(o => o.User);
             return View(await incodedatabaseContext.ToListAsync());
         }
-
+        
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -42,6 +44,25 @@ namespace incode.Controllers
             }
 
             return View(order);
+        }
+
+        // GET: Orders/OrderDetail
+        public async Task<IActionResult> OrderDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderdetail = await _context.OrderDetails
+                .Include(o => o.Order)
+                .Where(m => m.OrderId == id).ToListAsync();
+            if (orderdetail == null)
+            {
+                return NotFound();
+            }
+
+            return View(orderdetail);
         }
 
         // GET: Orders/Create
