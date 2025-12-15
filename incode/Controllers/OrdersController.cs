@@ -46,7 +46,8 @@ namespace incode.Controllers
             return View(order);
         }
 
-        // GET: Orders/OrderDetail
+        // GET: Orders/OrderDetail/5
+
         public async Task<IActionResult> OrderDetail(int? id)
         {
             if (id == null)
@@ -66,8 +67,29 @@ namespace incode.Controllers
                 name = products.Where(s => s.ProductId == p.ProductId).Select(s => s.Name).Single(),
                 Notes = order.Where(s => s.OrderId == p.OrderId).Select(s => s.Notes).Single()
             });
+            var result = await orderdetail.Where(a => a.OrderId == id).ToListAsync();
+            
+            if (result == null)
+            {
+                return NotFound();
+            }
 
-            return View(await orderdetail.Where(a=>a.OrderId ==id).ToListAsync());
+            return View(result);
+        }
+
+        // POST: Orders/OrderDetail/5/Delete
+        [HttpPost, ActionName("DeleteOrderDetail")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteOrderDetail(int id)
+        {
+            var order = await _context.OrderDetails.FindAsync(id);
+            if (order != null)
+            {
+                _context.OrderDetails.Remove(order);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(OrderDetail));
         }
 
         // GET: Orders/Create

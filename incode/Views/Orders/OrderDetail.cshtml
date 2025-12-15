@@ -5,6 +5,7 @@
     ViewData["Title"] = "訂單詳細";
 }
 
+<div>
 <table class="table">
     <tr>
         <th>
@@ -28,6 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Notes)
         </th>
+        <th></th>
     </tr>
     @foreach (var item in Model)
     {
@@ -53,6 +55,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Notes)
             </td>
+            <td>
+                <form asp-action="DeleteOrderDetail">
+                @* <input type="hidden" asp-for="item.OrderDetailId" /> *@
+                <input type="submit" value="刪除" class="btn btn-danger" />
+                </form>
+            </td>
         </tr>
     }
 </table>
+<a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
