@@ -1,60 +1,97 @@
-﻿@model incode.Models.Post
+﻿@model incode.ViewModels.PostDetailsViewModel
 
-@{
-    ViewData["Title"] = "Details";
+<div class="container mt-4">
+    <article class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">@Model.Post.Title</h1>
+            <div class="text-muted mb-2">
+                <small>發布時間: @(Model.Post.PostsCreatedAt.HasValue? Model.Post.PostsCreatedAt.Value.ToString("yyyy/MM/dd HH:mm") : "")</small> |
+
+                <small>瀏覽次數: @Model.Post.PostsViewCount</small> |
+
+                @if (Model.Post.IsCommission)
+                {
+                    <span class="badge bg-warning text-dark">委託文</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">一般文</span>
+                }
+            </div>
+            <hr />
+            <div class="card-text" style="white-space: pre-wrap;">
+                @Model.Post.PostsContent
+            </div>
+
+            <div class="mt-4">
+                <button id="likeBtn" class="btn @(Model.IsLikedByCurrentUser ? "btn-danger" : "btn-outline-danger")" onclick="toggleLike(@Model.Post.PostsId)">
+                    <i class="bi bi-heart-fill"></i> 讚 (<span id="likeCount">@Model.LikeCount</span>)
+                </button>
+            </div>
+        </div>
+    </article>
+
+    <div class="mt-4">
+        <h3>留言區</h3>
+        @if (Model.Post.PostsReplies != null && Model.Post.PostsReplies.Any())
+        {
+            <ul class="list-group list-group-flush mb-4">
+                @foreach (var reply in Model.Post.PostsReplies.OrderBy(r => r.RepliesCreatedAt))
+                {
+                    <li class="list-group-item">
+                        <strong>使用者 ID: @reply.RepliesUserId</strong>
+
+                        <span class="text-muted small">
+                            @(reply.RepliesCreatedAt.HasValue? reply.RepliesCreatedAt.Value.ToString("yyyy/MM/dd HH:mm") : "")
+                        </span>
+
+                        <p class="mt-1">@reply.RepliesContent</p>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">目前還沒有留言，搶頭香！</p>
+        }
+
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5>撰寫留言</h5>
+                <form asp-action="AddReply" method="post">
+                    <input type="hidden" name="postId" value="@Model.Post.PostsId"/>
+                    <div class="form-group mb-3">
+                        <textarea name="content" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">送出留言</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleLike(postId) {
+            $.ajax({
+                url: '/Posts/ToggleLike',
+                type: 'POST',
+                data: { postId: postId },
+                success: function (response) {
+                    if (response.success) {
+                        $('#likeCount').text(response.count);
+                        var btn = $('#likeBtn');
+                        if (response.isLiked) {
+                            btn.removeClass('btn-outline-danger').addClass('btn-danger');
+                        } else {
+                            btn.removeClass('btn-danger').addClass('btn-outline-danger');
+                        }
+                    }
+                },
+                error: function () {
+                    alert('發生錯誤，請稍後再試。');
+                }
+            });
+        }
+    </script>
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostsContent)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostsContent)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostsViewCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostsViewCount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostsCreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostsCreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostsUpdatDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostsUpdatDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsCommission)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsCommission)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostsUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostsUser.Nickname)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PostsId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
