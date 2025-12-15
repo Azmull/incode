@@ -19,10 +19,56 @@ namespace incode.Controllers
         }
 
         // GET: EntrustMissionProgresses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? EntrustMissionId, int? UserId)
         {
-            var incodedatabaseContext = _context.EntrustMissionProgresses.Include(e => e.EntrustMission).Include(e => e.User);
-            return View(await incodedatabaseContext.ToListAsync());
+
+            var query = _context.EntrustMissionProgresses
+                .Include(p => p.EntrustMission)   // 載入所屬委託任務
+                    .ThenInclude(m => m.User)      // 載入發布者資訊（可顯示發布者暱稱）
+                .Include(p => p.User)              // 載入接取者資訊
+                .AsNoTracking();                   // 純查看，不追蹤實體
+
+            // 篩選特定委託任務
+            if (EntrustMissionId.HasValue)
+            {
+                query = query.Where(p => p.EntrustMissionId == EntrustMissionId.Value);
+            }
+
+            // 篩選特定會員
+            if (UserId.HasValue)
+            {
+                query = query.Where(p => p.UserId == UserId.Value);
+            }
+
+            // 排序：先按任務ID，再按會員ID
+            query = query.OrderBy(p => p.EntrustMissionId)
+                         .ThenBy(p => p.UserId);
+
+            var progresses = await query.ToListAsync();
+
+            // 設定頁面標題，讓管理員一看就知道現在在看什麼
+            if (EntrustMissionId.HasValue)
+            {
+                var mission = await _context.EntrustMissions
+                    .FirstOrDefaultAsync(m => m.EntrustMissionId == EntrustMissionId.Value);
+                ViewBag.PageTitle = $"委託任務進度 - {mission?.Title ?? "未知任務"}";
+            }
+            else if (UserId.HasValue)
+            {
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(u => u.UserId == UserId.Value);
+                ViewBag.PageTitle = $"會員委託進度 - {user?.Nickname ?? "未知會員"}";
+            }
+            else
+            {
+                ViewBag.PageTitle = "所有委託任務進度記錄";
+            }
+
+            return View(progresses);
+            //var incodedatabaseContext = _context.entrust_mission_progress.Include(e => e.entrust_mission).Include(e => e.user);
+
+            //return View(await incodedatabaseContext.ToListAsync());
+
         }
 
         // GET: EntrustMissionProgresses/Details/5
@@ -42,13 +88,15 @@ namespace incode.Controllers
                 return NotFound();
             }
 
+            ViewBag.PageTitle = $"進度詳情 - {entrustMissionProgress.EntrustMission?.Title ?? "未知任務"}";
+
             return View(entrustMissionProgress);
         }
 
         // GET: EntrustMissionProgresses/Create
         public IActionResult Create()
         {
-            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Detail");
+            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Title");
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Nickname");
             return View();
         }
@@ -66,7 +114,7 @@ namespace incode.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Detail", entrustMissionProgress.EntrustMissionId);
+            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Title", entrustMissionProgress.EntrustMissionId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Nickname", entrustMissionProgress.UserId);
             return View(entrustMissionProgress);
         }
@@ -84,7 +132,7 @@ namespace incode.Controllers
             {
                 return NotFound();
             }
-            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Detail", entrustMissionProgress.EntrustMissionId);
+            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Title", entrustMissionProgress.EntrustMissionId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Nickname", entrustMissionProgress.UserId);
             return View(entrustMissionProgress);
         }
@@ -121,7 +169,7 @@ namespace incode.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Detail", entrustMissionProgress.EntrustMissionId);
+            ViewData["EntrustMissionId"] = new SelectList(_context.EntrustMissions, "EntrustMissionId", "Titlel", entrustMissionProgress.EntrustMissionId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Nickname", entrustMissionProgress.UserId);
             return View(entrustMissionProgress);
         }
@@ -167,3 +215,5 @@ namespace incode.Controllers
         }
     }
 }
+
+

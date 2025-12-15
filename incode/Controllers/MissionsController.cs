@@ -22,6 +22,7 @@ namespace incode.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Missions.ToListAsync());
+
         }
 
         // GET: Missions/Details/5
@@ -42,9 +43,20 @@ namespace incode.Controllers
             return View(mission);
         }
 
+        // 重複的 ResetType 選項（直接用字串）
+        private readonly List<SelectListItem> ResetType = new()
+        {
+           new SelectListItem { Value = "none", Text = "不重置" },
+           new SelectListItem { Value = "daily", Text = "每日重置" },
+           new SelectListItem { Value = "weekly", Text = "每週重置" },
+           new SelectListItem { Value = "monthly", Text = "每月重置" }
+        };
+
+
         // GET: Missions/Create
         public IActionResult Create()
         {
+            ViewBag.ResetType = ResetType;
             return View();
         }
 
@@ -61,6 +73,7 @@ namespace incode.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.ResetType = ResetType;
             return View(mission);
         }
 
@@ -77,6 +90,7 @@ namespace incode.Controllers
             {
                 return NotFound();
             }
+            ViewBag.ResetType = ResetType;
             return View(mission);
         }
 
@@ -112,6 +126,7 @@ namespace incode.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.ResetType = ResetType;
             return View(mission);
         }
 
@@ -154,3 +169,5 @@ namespace incode.Controllers
         }
     }
 }
+
+
