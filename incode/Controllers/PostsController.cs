@@ -32,13 +32,36 @@ namespace incode.Controllers
         {
             if (id == null) return NotFound();
 
+            // 1. 查詢資料庫 (包含作者、留言、按讚紀錄)
             var post = await _context.Posts
-                .Include(p => p.PostsUser)
+                .Include(p => p.PostsUser)                 // 關聯載入：文章作者
+                .Include(p => p.PostsReplies)              // 關聯載入：文章留言
+                    .ThenInclude(r => r.RepliesUser)       // 關聯載入：留言的作者
+                .Include(p => p.PostsLikes)                // 關聯載入：按讚紀錄
                 .FirstOrDefaultAsync(m => m.PostsId == id);
 
             if (post == null) return NotFound();
 
-            return View(post);
+            // 2. 假設當前登入者 ID (之後請改成 User.Identity 取得)
+            int currentUserId = 1;
+
+            // 3. ★ 關鍵步驟：將資料轉換為 PostDetailsViewModel
+            var viewModel = new PostDetailsViewModel
+            {
+                Post = post, // 將整包文章資料放入
+
+                // 計算按讚數
+                LikeCount = post.PostsLikes.Count,
+
+                // 判斷當前使用者是否按過讚 (用 Any 檢查是否存在該 User ID)
+                IsLikedByCurrentUser = post.PostsLikes.Any(l => l.LikesUserId == currentUserId),
+
+                // 留言輸入框預設為空
+                NewReplyContent = ""
+            };
+
+            // 4. 將 ViewModel 傳給 View
+            return View(viewModel);
         }
 
         // GET: Posts/Create
