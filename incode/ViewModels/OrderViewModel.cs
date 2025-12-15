@@ -2,12 +2,6 @@
 
 namespace incode.ViewModels
 {
-    public class OrderViewModel
-    {
-        public int UserId { get; set; }
-        
-        public string? Notes { get; set; }
-    }
     public class OrderDetailViewModel
     {
         public int OrderDetailId { get; set; }
@@ -15,11 +9,15 @@ namespace incode.ViewModels
         public int Quantity { get; set; }
 
         public int UnitPriceAtPurchase { get; set; }
+        
         public bool IsShipped { get; set; }
 
-    }
-    public class ProductViewModel
-    {
-        public int name { get; set; }
+        public int UserId { get; set; }
+        
+        public string? Notes { get; set; }
+   
+        public string name { get; set; }
+
+        public int OrderId { get; set; }
     }
 }

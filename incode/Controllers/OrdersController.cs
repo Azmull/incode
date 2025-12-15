@@ -53,16 +53,21 @@ namespace incode.Controllers
             {
                 return NotFound();
             }
-
-            var orderdetail = await _context.OrderDetails
-                .Include(o => o.Order)
-                .Where(m => m.OrderId == id).ToListAsync();
-            if (orderdetail == null)
+            var products = _context.Products;
+            var order = _context.Orders;
+            var orderdetail = _context.OrderDetails.Select(p => new OrderDetailViewModel
             {
-                return NotFound();
-            }
+                OrderId = p.OrderId,
+                OrderDetailId = p.OrderDetailId,
+                Quantity = p.Quantity,
+                UnitPriceAtPurchase = p.UnitPriceAtPurchase,
+                IsShipped = p.IsShipped,
+                UserId = p.OrderId,
+                name = products.Where(s => s.ProductId == p.ProductId).Select(s => s.Name).Single(),
+                Notes = order.Where(s => s.OrderId == p.OrderId).Select(s => s.Notes).Single()
+            });
 
-            return View(orderdetail);
+            return View(await orderdetail.Where(a=>a.OrderId ==id).ToListAsync());
         }
 
         // GET: Orders/Create
