@@ -1,0 +1,60 @@
+﻿@model incode.Models.Post
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostsContent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostsContent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostsViewCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostsViewCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostsCreatedAt)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostsCreatedAt)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostsUpdatDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostsUpdatDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsCommission)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsCommission)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostsUser)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostsUser.Nickname)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PostsId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
