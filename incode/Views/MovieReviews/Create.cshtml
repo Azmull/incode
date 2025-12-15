@@ -1,0 +1,80 @@
+﻿@model incode.Models.MovieReview
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>MovieReview</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MovieId" class="control-label"></label>
+                <select asp-for="MovieId" class ="form-control" asp-items="ViewBag.MovieId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="OverallRating" class="control-label"></label>
+                <input asp-for="OverallRating" class="form-control" />
+                <span asp-validation-for="OverallRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoryRating" class="control-label"></label>
+                <input asp-for="StoryRating" class="form-control" />
+                <span asp-validation-for="StoryRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActingRating" class="control-label"></label>
+                <input asp-for="ActingRating" class="form-control" />
+                <span asp-validation-for="ActingRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VisualRating" class="control-label"></label>
+                <input asp-for="VisualRating" class="form-control" />
+                <span asp-validation-for="VisualRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MusicRating" class="control-label"></label>
+                <input asp-for="MusicRating" class="form-control" />
+                <span asp-validation-for="MusicRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LinkedPostId" class="control-label"></label>
+                <select asp-for="LinkedPostId" class ="form-control" asp-items="ViewBag.LinkedPostId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedAt" class="control-label"></label>
+                <input asp-for="UpdatedAt" class="form-control" />
+                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
