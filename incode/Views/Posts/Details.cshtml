@@ -1,0 +1,66 @@
+﻿@model incode.ViewModels.PostDetailsViewModel
+
+@{
+    ViewData["Title"] = "文章詳情";
+}
+
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">@Model.Post.Title</h2>
+            <h6 class="card-subtitle mb-2 text-muted">
+                作者：@Model.Post.PostsUser?.Nickname |
+                發布時間：@Model.Post.PostsCreatedAt
+            </h6>
+            <hr />
+
+            <p class="card-text" style="white-space: pre-wrap;">@Model.Post.PostsContent</p>
+        </div>
+
+        <div class="card-footer text-muted">
+            <span>
+                @if (Model.IsLikedByCurrentUser)
+                {
+                    <span style="color:red;">♥ 已按讚</span>
+                }
+                else
+                {
+                    <span>♡ 未按讚</span>
+                }
+                (@Model.LikeCount 人喜歡)
+            </span>
+            | 瀏覽次數：@Model.Post.PostsViewCount
+        </div>
+    </div>
+
+    <h4>留言回應 (@Model.Post.PostsReplies.Count)</h4>
+    <hr />
+
+    @foreach (var reply in Model.Post.PostsReplies)
+    {
+        <div class="card mb-3 bg-light">
+            <div class="card-body p-3">
+                <strong>@reply.RepliesUser?.Nickname</strong> 說：
+                <p class="mb-1 mt-1">@reply.RepliesContent</p>
+                <small class="text-muted">@reply.RepliesCreatedAt</small>
+            </div>
+        </div>
+    }
+
+    <div class="mt-4">
+        <h5>我要留言</h5>
+        <form asp-action="CreateReply" asp-controller="Replies" method="post">
+            <input type="hidden" name="postId" value="@Model.Post.PostsId" />
+
+            <div class="form-group mb-2">
+                <textarea name="content" class="form-control" rows="3" placeholder="請輸入您的看法..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">送出留言</button>
+        </form>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Edit" asp-route-id="@Model.Post.PostsId" class="btn btn-warning">編輯文章</a>
+        <a asp-action="Index" class="btn btn-secondary">返回列表</a>
+    </div>
+</div>
