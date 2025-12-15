@@ -1,13 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>@ViewData["Title"] - incode</title>
-  <script type="importmap"></script>
-  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  <link rel="stylesheet" href="~/incode.styles.css" asp-append-version="true" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - incode</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/incode.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
@@ -35,6 +36,15 @@
             <li class="nav-item">
               <a class="nav-link text-dark" asp-area="" asp-controller="MovieReviews" asp-action="Index">電影評論</a>
             </li>
+                      <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">商品管理</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">訂單管理</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="ShippedDetails" asp-action="Index">寄送紀錄</a>
+</li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

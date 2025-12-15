@@ -1,0 +1,64 @@
+﻿@model incode.Models.ShippedDetail
+
+@{
+    ViewData["Title"] = "寄送紀錄";
+}
+
+<h1>Edit</h1>
+
+<h4>ShippedDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ShippedDetailId" />
+            <div class="form-group">
+                <label asp-for="OrderDetailId" class="control-label"></label>
+                <select asp-for="OrderDetailId" class="form-control" asp-items="ViewBag.OrderDetailId"></select>
+                <span asp-validation-for="OrderDetailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipientName" class="control-label"></label>
+                <input asp-for="RecipientName" class="form-control" />
+                <span asp-validation-for="RecipientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipientAddress" class="control-label"></label>
+                <input asp-for="RecipientAddress" class="form-control" />
+                <span asp-validation-for="RecipientAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipientPhone" class="control-label"></label>
+                <input asp-for="RecipientPhone" class="form-control" />
+                <span asp-validation-for="RecipientPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShippedDate" class="control-label"></label>
+                <input asp-for="ShippedDate" class="form-control" />
+                <span asp-validation-for="ShippedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArrivalDate" class="control-label"></label>
+                <input asp-for="ArrivalDate" class="form-control" />
+                <span asp-validation-for="ArrivalDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCompleted" /> @Html.DisplayNameFor(model => model.IsCompleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

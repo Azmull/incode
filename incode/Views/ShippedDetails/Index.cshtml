@@ -1,0 +1,71 @@
+﻿@model IEnumerable<incode.Models.ShippedDetail>
+
+@{
+    ViewData["Title"] = "寄送紀錄";
+}
+
+<h1>寄送紀錄</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">新增</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipientAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipientPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDetail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipientAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipientPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDetail.OrderDetailId)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.ShippedDetailId" class="btn btn-primary">修改</a>
+                    <a asp-action="Details" asp-route-id="@item.ShippedDetailId" class="btn btn-primary">詳細</a>
+                    <a asp-action="Delete" asp-route-id="@item.ShippedDetailId" class="btn btn-danger">刪除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
